@@ -3,14 +3,14 @@ import Users from '../database/models/Users';
 import IUsersService from '../interfaces/IUsersService';
 
 export default class UsersServices implements IUsersService {
-  async login(data: string): Promise<Users> {
+  async login(email: string): Promise<Users> {
     const user = await this.model.findOne({
-      where: {
-        email: data,
-      },
+      where: { email },
     });
 
-    if (!user) throw new Error('Invalid email or password');
+    if (!user) {
+      throw new Error('Invalid email or password');
+    }
 
     return user;
   }

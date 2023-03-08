@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { compare } from 'bcryptjs';
+import { compareSync } from 'bcryptjs';
 import IUsersService from '../interfaces/IUsersService';
 import generateToken from '../middlewares/jwt';
 
@@ -18,11 +18,16 @@ export default class UsersController {
     }
 
     try {
+      const regex = /\S+@\S+.\S+/;
+
+      if (regex.test(email) || password.length < 6) throw new Error();
+
       const user = await this._service.login(email);
 
-      if (await compare(password, user.password)) {
-        const token = await generateToken(user);
-        return res.status(200).json(token);
+      if (compareSync(password, user.password as string)) {
+        const token = generateToken({ email, password });
+
+        return res.status(200).json({ token });
       }
     } catch {
       res.status(401).json({ message: 'Invalid email or password' });

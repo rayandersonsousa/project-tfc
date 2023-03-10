@@ -19,4 +19,11 @@ export default class MatchesController {
     const matches = await this._service.getAll();
     return res.status(200).json(matches);
   }
+
+  async endMatch(req: Request, res: Response) {
+    const { id } = req.params;
+    const match = await this._service.endMatch(Number(id));
+
+    return res.status(200).json(match);
+  }
 }

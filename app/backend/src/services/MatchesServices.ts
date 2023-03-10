@@ -26,5 +26,12 @@ export default class MatchesServices implements IMatches {
     return matchesProgress;
   }
 
+  async endMatch(id: number): Promise<number> {
+    const match = await this.model.update({
+      inProgress: false,
+    }, { where: { id } });
+    return match[0];
+  }
+
   protected model: ModelStatic<Matches> = Matches;
 }

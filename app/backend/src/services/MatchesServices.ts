@@ -14,5 +14,17 @@ export default class MatchesServices implements IMatches {
     return matches;
   }
 
+  async getInPRogress(progress: string): Promise<Matches[]> {
+    const inProgress = JSON.parse(progress);
+    const matchesProgress = await this.model.findAll({
+      include: [
+        { model: Teams, as: 'homeTeam', attributes: ['teamName'] },
+        { model: Teams, as: 'awayTeam', attributes: ['teamName'] },
+      ],
+      where: { inProgress },
+    });
+    return matchesProgress;
+  }
+
   protected model: ModelStatic<Matches> = Matches;
 }

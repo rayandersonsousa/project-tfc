@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { compareSync } from 'bcryptjs';
 import IUsersService from '../interfaces/IUsersService';
 import generateToken from '../middlewares/jwt';
@@ -32,6 +32,16 @@ export default class UsersController {
       throw new Error();
     } catch {
       res.status(401).json({ message: 'Invalid email or password' });
+    }
+  }
+
+  async getUserRole(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { email } = req.body;
+      const role = await this._service.getUserRole(email);
+      return res.status(200).json({ role });
+    } catch (e) {
+      next(e);
     }
   }
 }

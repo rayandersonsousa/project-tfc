@@ -1,8 +1,8 @@
 import jwt = require('jsonwebtoken');
 
-require('dotenv/config');
+// require('dotenv/config');
 
-const SECRET = process.env.JTW_SECRET;
+const SECRET = process.env.JWT_SECRET;
 
 const jwtConfig: jwt.SignOptions = {
   algorithm: 'HS256',

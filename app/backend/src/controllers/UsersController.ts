@@ -18,17 +18,18 @@ export default class UsersController {
     }
 
     try {
-      const regex = /\S+@\S+.\S+/;
+      const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-      if (regex.test(email) || password.length < 6) throw new Error();
+      if (!regex.test(email) || password.length < 6) throw new Error();
 
       const user = await this._service.login(email);
 
-      if (compareSync(password, user.password as string)) {
+      if (compareSync(password, user.password)) {
         const token = generateToken({ email, password });
 
         return res.status(200).json({ token });
       }
+      throw new Error();
     } catch {
       res.status(401).json({ message: 'Invalid email or password' });
     }

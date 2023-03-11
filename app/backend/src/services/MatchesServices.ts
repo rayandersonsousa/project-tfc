@@ -14,7 +14,7 @@ export default class MatchesServices implements IMatches {
     return matches;
   }
 
-  async getInPRogress(progress: string): Promise<Matches[]> {
+  async getInProgress(progress: string): Promise<Matches[]> {
     const inProgress = JSON.parse(progress);
     const matchesProgress = await this.model.findAll({
       include: [
@@ -31,6 +31,13 @@ export default class MatchesServices implements IMatches {
       inProgress: false,
     }, { where: { id } });
     return match[0];
+  }
+
+  async updateMatch(id: number, homeTeamGoals: number, awayTeamGoals: number) {
+    await this.model.update(
+      { homeTeamGoals, awayTeamGoals },
+      { where: { id } },
+    );
   }
 
   protected model: ModelStatic<Matches> = Matches;

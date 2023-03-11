@@ -37,7 +37,7 @@ export default class UsersController {
 
   async getUserRole(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email } = req.body;
+      const { email } = req.body.jwToken;
       const role = await this._service.getUserRole(email);
       return res.status(200).json({ role });
     } catch (e) {

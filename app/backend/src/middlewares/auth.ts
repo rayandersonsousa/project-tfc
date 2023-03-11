@@ -11,7 +11,7 @@ export default class auth {
       return res.status(401).json({ message: 'Token not found' });
     }
     try {
-      req.body = jwt.verify(authorization, SECRET as string);
+      req.body.jwToken = jwt.verify(authorization, SECRET as string);
     } catch {
       return res.status(401).json({ message: 'Token must be a valid token' });
     }

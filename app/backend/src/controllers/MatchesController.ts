@@ -35,4 +35,9 @@ export default class MatchesController {
 
     return res.status(200).json({ message: 'Daijoubu' });
   }
+
+  async createMatch(req: Request, res: Response) {
+    const newMatch = await this._service.createMatch(req.body);
+    return res.status(201).json(newMatch);
+  }
 }

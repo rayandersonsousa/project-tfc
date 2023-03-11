@@ -2,6 +2,7 @@ import { ModelStatic } from 'sequelize';
 import IMatches from '../interfaces/IMatches';
 import Matches from '../database/models/Matches';
 import Teams from '../database/models/Teams';
+import { INewMatch } from '../interfaces/INewMatch';
 
 export default class MatchesServices implements IMatches {
   async getAll(): Promise<Matches[]> {
@@ -38,6 +39,20 @@ export default class MatchesServices implements IMatches {
       { homeTeamGoals, awayTeamGoals },
       { where: { id } },
     );
+  }
+
+  async createMatch(newMatch: INewMatch): Promise<Matches> {
+    const { homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals } = newMatch;
+
+    const createNewMatch = await this.model.create({
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+      inProgress: true,
+    });
+
+    return createNewMatch;
   }
 
   protected model: ModelStatic<Matches> = Matches;

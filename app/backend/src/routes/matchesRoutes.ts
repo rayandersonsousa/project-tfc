@@ -12,5 +12,7 @@ matchesRoutes.patch('/matches/:id/finish', auth.verifyToken, (req, res) => match
   .endMatch(req, res));
 matchesRoutes.patch('/matches/:id', auth.verifyToken, (req: Request, res: Response) =>
   matchesController.updateMatch(req, res));
+matchesRoutes.post('/matches', auth.verifyToken, (req, res) => matchesController
+  .createMatch(req, res));
 
 export default matchesRoutes;

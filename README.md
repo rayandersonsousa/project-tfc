@@ -4,7 +4,7 @@ Projeto desenvolvido durante o módulo de Back-end do curso de desenvolvimento w
 
 ## Sobre o projeto
 
-Nesse projeto foi desenvolvido API que deve ser consumida por um front-end já disponibilizado, para isso foi feita uma conteinerização com o docker.
+Nesse projeto foi desenvolvido uma API que deve ser consumida por um front-end já disponibilizado, para isso foi feita uma conteinerização com o docker.
 
 
 ## Clonando o projeto
